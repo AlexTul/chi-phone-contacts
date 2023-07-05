@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.tuleninov</groupId>
-    <artifactId>chi-phone-contacts</artifactId>
+    <artifactId>chi-phone-contacts-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>chi-phone-contacts</name>
-    <description>chi-phone-contacts</description>
+    <name>chi-phone-contacts-service</name>
+    <description>chi-phone-contacts-service</description>
 
     <properties>
         <java.version>17</java.version>
