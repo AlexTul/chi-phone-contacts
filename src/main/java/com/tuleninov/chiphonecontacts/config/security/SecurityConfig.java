@@ -108,8 +108,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, Routes.USERS + "/{code}/activate").permitAll()
                 // user can get new password from server
                 .antMatchers(HttpMethod.PATCH, Routes.USERS + "/forgot").permitAll()
-                //
-                .antMatchers(HttpMethod.GET, Routes.PHONES, Routes.PHONES + "/{id:\\d+}/phones", Routes.PHONES + "/{id:\\d+}").permitAll()
                 // admin can register new admins
                 .antMatchers(HttpMethod.POST, Routes.USERS + "/admins").hasRole("ADMIN")
                 // regular users can view basic user info for other users
