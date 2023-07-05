@@ -83,3 +83,5 @@ Response Body:
  ]
 
 To see available endpoints, go to [http://localhost:8080/swagger-ui.html]()
+
+To run the application using the Docker command line, run in Maven "mvn package -Dspring.datasource.username=your_username -Dspring.datasource.password=your_password" and in Docker "docker-compose up -d"
