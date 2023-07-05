@@ -1,0 +1,3 @@
+logging:
+  level:
+    com.tuleninov.chiphonecontacts: debug
