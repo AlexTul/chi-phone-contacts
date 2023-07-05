@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+
+  phone-contacts-service:
+    image: phone-contacts-service:0.0.1-SNAPSHOT
+    build:
+      context: .
+    container_name: phone_contacts_service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/phone_contacts
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      PHONE_CONTACTS_SECURITY_JWT_SECRET: ${JWT_SECRET}
+      PHONE_CONTACTS_SECURITY_ADMINS_ADMINTEST_PASSWORD: ${DEFAULT_ADMIN_PASSWORD}
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+
+  db:
+    image: postgres:13
+    container_name: phone_contacts_db
+    restart: always
+    environment:
+      POSTGRES_DB: phone_contacts
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data:
+    driver: local
