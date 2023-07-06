@@ -97,6 +97,10 @@ public class CustomUser {
         this.activationCode = activationCode;
     }
 
+    public String getActivationCode() {
+        return activationCode;
+    }
+
     public Map<KnownAuthority, UserAuthority> getAuthorities() {
         return authorities;
     }

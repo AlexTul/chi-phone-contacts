@@ -18,7 +18,7 @@ The app to be implemented should:
 -       Use Spring Boot, Spring Web, Spring Security and Spring Data + Hibernate
 -       Should give access only to authorized users, so each user should have his own list of phone contacts (Use Spring Security)
 -       Be a RESTful webservice from a client perspective
--       When contact is added or edited, emails and phone phones should be validated so thatit is not possible to add phone phone like “+38-asdas” or email like “aa@”. Also every phone phone and email should be unique per contact. So it should not be possible to add already existing email, the same for phone phones
+-       When contact is added or edited, emails and phone phones should be validated so that it is not possible to add phone phone like “+38-asdas” or email like “aa@”. Also every phone phone and email should be unique per contact. So it should not be possible to add already existing email, the same for phone phones
 Contact names should be unique
 -       Have unit and integration tests
 (Optional) Additional work as bonus:

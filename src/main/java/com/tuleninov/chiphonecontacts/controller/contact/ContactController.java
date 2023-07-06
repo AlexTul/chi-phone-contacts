@@ -65,7 +65,7 @@ public class ContactController {
      * @param name    the name of contact
      * @param request the request with contact parameters
      */
-    @PatchMapping(
+    @PutMapping(
             value = "/{name}",
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
