@@ -1,4 +1,4 @@
-package com.tuleninov.chiphonecontacts.exceptions;
+package com.tuleninov.chiphonecontacts.exceptions.user;
 
 import com.tuleninov.chiphonecontacts.exceptions.auth.InvalidRefreshTokenException;
 import org.springframework.http.HttpStatus;

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.tuleninov.chiphonecontacts.exceptions.UserExceptions.userNotFound;
+import static com.tuleninov.chiphonecontacts.exceptions.user.UserExceptions.userNotFound;
 
 /**
  * Controller for user registration, authenticated user API, admin-only API.

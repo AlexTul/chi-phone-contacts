@@ -1,6 +1,6 @@
 package com.tuleninov.chiphonecontacts.service.user;
 
-import com.tuleninov.chiphonecontacts.exceptions.UserExceptions;
+import com.tuleninov.chiphonecontacts.exceptions.user.UserExceptions;
 import com.tuleninov.chiphonecontacts.model.auth.CustomUserDetails;
 import com.tuleninov.chiphonecontacts.model.user.CustomUser;
 import com.tuleninov.chiphonecontacts.model.user.KnownAuthority;

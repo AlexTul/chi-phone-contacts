@@ -70,33 +70,35 @@ where rt.expire_at < current_timestamp
    or rt.user_id in (select u.id from users u where u.id = rt.user_id and u.status = 1)
 $$;
 
+create table contacts
+(
+    id      bigserial not null primary key,
+    name    text      not null unique,
+    user_id bigint    not null,
+    constraint contacts_user_fk foreign key (user_id)
+        references users (id) on delete cascade
+);
+
+create unique index contacts_name_index on contacts (name);
+
 create table emails
 (
-    email_id bigserial not null primary key,
-    name     text      not null unique
+    id         bigserial not null primary key,
+    value      text      not null unique,
+    contact_id bigint    not null,
+    constraint emails_contact_fk foreign key (contact_id)
+        references contacts (id) on delete cascade
 );
 
-create unique index emails_name_index on emails (name);
-
-create table numbers
-(
-    number_id bigserial not null primary key,
-    name      text      not null unique
-);
-
-create unique index numbers_name_index on numbers (name);
+create unique index emails_value_index on emails (value);
 
 create table phones
 (
     id         bigserial not null primary key,
-    name       text      not null unique,
-    email_id   bigint    not null,
-    number_id  bigint    not null,
-    image_name text      not null unique,
-    constraint phones_email_fk foreign key (email_id)
-        references emails (email_id) on delete cascade,
-    constraint phones_number_fk foreign key (number_id)
-        references numbers (number_id) on delete cascade
+    value      text      not null unique,
+    contact_id bigint    not null,
+    constraint phones_contact_fk foreign key (contact_id)
+        references contacts (id) on delete cascade
 );
 
-create unique index phones_name_index on phones (name);
+create unique index phones_value_index on phones (value);

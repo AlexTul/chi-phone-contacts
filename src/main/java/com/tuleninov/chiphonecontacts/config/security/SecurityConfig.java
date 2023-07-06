@@ -129,7 +129,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // allow cross-origin requests for all endpoints
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
-                .csrf().disable() // вимикаємо кроссорсреквестфорджері - тому, що він вимагає наявності кукі, а у нас стєйтлесс додаток
+                .csrf().disable()
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
@@ -139,7 +139,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * */
     private JWTAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         var filter = new JWTAuthenticationFilter(authenticationManager(), objectMapper);
-        filter.setFilterProcessesUrl(Routes.TOKEN); // для запиту на Routes.TOKEN буде використовуватися цей фільтр
+        filter.setFilterProcessesUrl(Routes.TOKEN);
         return filter;
     }
 

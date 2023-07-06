@@ -16,9 +16,9 @@ public final class Routes {
 
     public static final String USERS = API_ROOT + "/users";
 
-    public static final String TOKEN = API_ROOT + "/token";
+    public static final String TOKEN = API_ROOT + "/auth";
 
-    public static final String PHONES = API_ROOT + "/phones";
+    public static final String CONTACTS = API_ROOT + "/contacts";
 
 
     public static String user(long id) {

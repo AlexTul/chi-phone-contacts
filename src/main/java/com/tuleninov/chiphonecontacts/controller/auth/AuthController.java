@@ -1,7 +1,7 @@
 package com.tuleninov.chiphonecontacts.controller.auth;
 
 import com.tuleninov.chiphonecontacts.Routes;
-import com.tuleninov.chiphonecontacts.exceptions.UserExceptions;
+import com.tuleninov.chiphonecontacts.exceptions.user.UserExceptions;
 import com.tuleninov.chiphonecontacts.exceptions.auth.InvalidRefreshTokenException;
 import com.tuleninov.chiphonecontacts.model.auth.CustomUserDetails;
 import com.tuleninov.chiphonecontacts.model.auth.request.RefreshTokenRequest;

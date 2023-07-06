@@ -33,7 +33,7 @@ public class CustomUser {
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
 
-    @Column(name = "activation_code")
+    @Column(name = "activation_code", nullable = false)
     private String activationCode;
 
     @ManyToMany
