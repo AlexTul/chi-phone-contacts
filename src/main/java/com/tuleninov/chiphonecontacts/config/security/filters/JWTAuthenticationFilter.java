@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 /**
- * JWTAuthenticationFilter бере JSON з інформацією про логін користувача, читає її як SignInRequest.
- * Дістає юзера з БД, валідує його юзернейм та пароль.
+ * JWTAuthenticationFilter takes JSON with user login information, reads it as SignInRequest.
+ * Retrieves the user from the database, validates his username and password.
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
