@@ -240,6 +240,43 @@ public class UserServiceTest {
     }
 
     @Test
+    void testDeleteById() {
+        var absentId = 100L;
+        var presentId = 1L;
+        var presentEmail = "test@gmail.com";
+        var presentNickname = "test";
+        var password = "fua9eeF1ahphooy5eth9ooth1iebee0AeWahyob4lai4cha3goohaewoh0gicieB";
+        var encodePassword = passwordEncoder.encode(password);
+        var createdAt = OffsetDateTime.now();
+        var code = UUID.randomUUID().toString();
+        var userAuthority = new UserAuthority();
+        userAuthority.setId(KnownAuthority.ROLE_USER);
+
+        var user = new CustomUser();
+        user.setId(presentId);
+        user.setEmail(presentEmail);
+        user.setNickname(presentNickname);
+        user.setStatus(UserStatus.SUSPENDED);
+        user.setPassword(encodePassword);
+        user.setCreatedAt(createdAt);
+        user.setActivationCode(code);
+        user.getAuthorities().put(KnownAuthority.ROLE_USER, userAuthority);
+
+        when(userRepository.existsById(presentId)).thenReturn(true);
+        when(userRepository.findById(presentId)).thenReturn(Optional.of(user));
+
+        Optional<UserResponse> presentResponse = userService.deleteById(presentId);
+
+        assertThat(presentResponse).hasValueSatisfying(messageResponse ->
+                assertUserMatchesResponse(user, messageResponse));
+        verify(userRepository).existsById(presentId);
+        verify(userRepository).findById(presentId);
+        verify(userRepository).delete(user);
+
+        verifyNoMoreInteractions(userRepository);
+    }
+
+    @Test
     void testActivate() {
         var presentId = 1L;
         var presentEmail = "test@gmail.com";
