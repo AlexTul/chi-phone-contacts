@@ -324,7 +324,7 @@ public class UserService implements UserDetailsService, UserOperations {
      * @return the encode password
      */
     private String createTemporaryPassword(CustomUser user) {
-        var temporaryPassword = generateRandomPassword(64);
+        var temporaryPassword = generateRandomPassword();
         String encodePassword = passwordEncoder.encode(temporaryPassword);
         user.setPassword(encodePassword);
         return temporaryPassword;
@@ -333,15 +333,14 @@ public class UserService implements UserDetailsService, UserOperations {
     /**
      * Generate random password.
      *
-     * @param length password length
      * @return encode password
      */
-    public static String generateRandomPassword(int length) {
+    private String generateRandomPassword() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
         var random = new SecureRandom();
         StringBuilder password = new StringBuilder();
 
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < 64; i++) {
             int randomIndex = random.nextInt(characters.length());
             char randomChar = characters.charAt(randomIndex);
             password.append(randomChar);
