@@ -262,8 +262,12 @@ public class UserServiceTest {
         user.setActivationCode(code);
         user.getAuthorities().put(KnownAuthority.ROLE_USER, userAuthority);
 
+        when(userRepository.existsById(absentId)).thenReturn(false);
         when(userRepository.existsById(presentId)).thenReturn(true);
         when(userRepository.findById(presentId)).thenReturn(Optional.of(user));
+
+        assertThrows(ResponseStatusException.class, () -> userService.deleteById(absentId));
+        verify(userRepository).existsById(absentId);
 
         Optional<UserResponse> presentResponse = userService.deleteById(presentId);
 

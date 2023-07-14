@@ -104,9 +104,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 // allow user registration and refresh, ignore authorization filters on login
                 .antMatchers(HttpMethod.POST, Routes.USERS, Routes.TOKEN + "/refresh").permitAll()
-                // user can get activation code from DB for activation
+                // allow user to get activation code from database for activation
                 .antMatchers(HttpMethod.GET, Routes.USERS + "/{code}/activate").permitAll()
-                // user can get new password from server
+                // allow user to get a new password from the server
                 .antMatchers(HttpMethod.PATCH, Routes.USERS + "/forgot").permitAll()
                 // admin can register new admins
                 .antMatchers(HttpMethod.POST, Routes.USERS + "/admins").hasRole("ADMIN")

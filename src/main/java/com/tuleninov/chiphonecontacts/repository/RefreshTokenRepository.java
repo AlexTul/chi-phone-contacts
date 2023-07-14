@@ -27,4 +27,8 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, UUID
     @Modifying
     void updateChain(RefreshToken oldHead, RefreshToken newHead);
 
+    @Modifying
+    @Query(value = "call prune_refresh_tokens()", nativeQuery = true)
+    void pruneRefreshTokens();
+
 }

@@ -90,6 +90,9 @@ public class JWTAuthService implements AuthOperations {
 
         refreshTokenRepository.updateChain(storedToken, nextToken);
 
+        // call prune_refresh_tokens() after refreshing
+        refreshTokenRepository.pruneRefreshTokens();
+
         return response(user.getEmail(), user.getAuthorities().keySet(), nextToken);
     }
 
@@ -181,7 +184,7 @@ public class JWTAuthService implements AuthOperations {
                 accessToken,
                 signRefreshToken(refreshToken),
                 jwtExpiration.toSeconds(),
-                authorities.toString()
+                authorities
         );
     }
 
