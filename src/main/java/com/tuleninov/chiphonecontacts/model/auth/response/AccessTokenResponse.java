@@ -1,11 +1,11 @@
 package com.tuleninov.chiphonecontacts.model.auth.response;
 
-import org.springframework.security.core.GrantedAuthority;
+import com.tuleninov.chiphonecontacts.model.user.KnownAuthority;
 
-import java.util.Collection;
+import java.util.Set;
 
 public record AccessTokenResponse(String accessToken,
                                   String refreshToken,
                                   long expireIn,
-                                  Collection<? extends GrantedAuthority> authorities) {
+                                  Set<KnownAuthority> authorities) {
 }

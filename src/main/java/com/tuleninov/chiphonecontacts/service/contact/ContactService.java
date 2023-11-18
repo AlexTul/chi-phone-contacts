@@ -52,7 +52,7 @@ public class ContactService implements ContactOperations {
         validateUniqueFields(request);
         var uniqueEmails = getUniqueSequence(request.emails());
         var uniquePhones = getUniqueSequence(request.phones());
-        return ContactResponse.fromContactWithBasicAttributes(save(email, request, uniqueEmails, uniquePhones));
+        return ContactResponse.fromContact(save(email, request, uniqueEmails, uniquePhones));
     }
 
     /**
@@ -67,7 +67,7 @@ public class ContactService implements ContactOperations {
     public Page<ContactResponse> list(String email, Pageable pageable) {
         var user = getUser(email);
         return contactRepository.findAllByUser(user, pageable)
-                .map(ContactResponse::fromContact);
+                .map(ContactResponse::fromContactWithBasicAttributes);
     }
 
     /**
@@ -149,14 +149,15 @@ public class ContactService implements ContactOperations {
      */
     private Contact save(String email, SaveContactRequest request,
                          List<String> uniqueEmails, List<String> uniquePhones) {
-        var contact = new Contact();
         var user = getUser(email);
+        var contact = new Contact();
         contact.setName(request.name());
         contact.setUser(user);
         Contact saveContact = contactRepository.save(contact);
-
         var listEmails = createListEmailsEntities(uniqueEmails, saveContact);
         var listPhones = createListPhonesEntities(uniquePhones, saveContact);
+        contact.setEmails(listEmails);
+        contact.setPhones(listPhones);
         emailRepository.saveAll(listEmails);
         phoneRepository.saveAll(listPhones);
 

@@ -9,6 +9,7 @@ import com.tuleninov.chiphonecontacts.model.auth.CustomUserDetails;
 import com.tuleninov.chiphonecontacts.model.auth.RefreshToken;
 import com.tuleninov.chiphonecontacts.model.auth.response.AccessTokenResponse;
 import com.tuleninov.chiphonecontacts.model.user.CustomUser;
+import com.tuleninov.chiphonecontacts.model.user.KnownAuthority;
 import com.tuleninov.chiphonecontacts.model.user.UserStatus;
 import com.tuleninov.chiphonecontacts.repository.RefreshTokenRepository;
 import com.tuleninov.chiphonecontacts.repository.UserRepository;
@@ -24,6 +25,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * The JWTAuthService for AuthController.
@@ -184,7 +186,9 @@ public class JWTAuthService implements AuthOperations {
                 accessToken,
                 signRefreshToken(refreshToken),
                 jwtExpiration.toSeconds(),
-                authorities
+                authorities.stream()
+                        .map(KnownAuthority.class::cast)
+                        .collect(Collectors.toSet())
         );
     }
 

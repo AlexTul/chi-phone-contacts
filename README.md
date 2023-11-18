@@ -49,7 +49,7 @@ Body
     "phones": ["+380939333333", "+380939333334", "+380939333335"]
 }
  -       User deletes a contact:
-HTTP DELETE %SERVER_URL%:%SERVER_PORT%/contacts
+HTTP DELETE %SERVER_URL%:%SERVER_PORT%/contacts/name
 -       User edits a contact:
 HTTP POST %SERVER_URL%:%SERVER_PORT%/contacts
 Body
@@ -82,4 +82,4 @@ Response Body:
 
 To see available endpoints, go to [http://localhost:8080/swagger-ui.html]()
 
-To run the application using the Docker command line, run in Maven "mvn package -Dspring.datasource.username=your_username -Dspring.datasource.password=your_password" and in Docker "docker-compose up -d"
+To run the application using the Docker command line, run in Maven "mvn clean package" and in Docker "docker-compose up -d"

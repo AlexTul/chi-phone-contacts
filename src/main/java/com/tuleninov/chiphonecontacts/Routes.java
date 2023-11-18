@@ -20,9 +20,7 @@ public final class Routes {
 
     public static final String CONTACTS = API_ROOT + "/contacts";
 
-
     public static String user(long id) {
         return USERS + '/' + id;
     }
-
 }

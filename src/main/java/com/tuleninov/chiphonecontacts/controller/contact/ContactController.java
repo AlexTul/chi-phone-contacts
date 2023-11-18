@@ -53,8 +53,8 @@ public class ContactController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @PageableAsQueryParam
-    public Page<ContactResponse> listGoods(@AuthenticationPrincipal String email,
-                                           @Parameter(hidden = true) Pageable pageable) {
+    public Page<ContactResponse> listContacts(@AuthenticationPrincipal String email,
+                                              @Parameter(hidden = true) Pageable pageable) {
         return contactOperations.list(email, pageable);
     }
 
@@ -76,7 +76,7 @@ public class ContactController {
     }
 
     /**
-     * Delete the contact by id in the database.
+     * Delete the contact by name in the database.
      *
      * @param name the name of the contact
      * @return the contact from the database in response format
@@ -86,8 +86,8 @@ public class ContactController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseStatus(HttpStatus.OK)
-    public ContactResponse deleteGoodsByName(@AuthenticationPrincipal String email,
-                                             @PathVariable String name) {
+    public ContactResponse deleteContactsByName(@AuthenticationPrincipal String email,
+                                                @PathVariable String name) {
         return contactOperations.deleteByName(email, name)
                 .orElseThrow(() -> contactNotFound(name));
     }
