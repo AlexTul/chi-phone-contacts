@@ -23,6 +23,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -60,28 +61,7 @@ class ChiPhoneContactsApplicationTests {
 
     @Test
     void testLogin() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        List<SaveUserRequest> requests = securityProperties.getAdmins().entrySet().stream()
-                .map(entry -> new SaveUserRequest(
-                        entry.getValue().getEmail(),
-                        new String(entry.getValue().getPassword()),
-                        entry.getKey()))
-                .peek(admin -> log.info("Default admin found: {} <{}>", admin.nickname(), admin.email())).toList();
-        SignInRequest signInRequest = new SignInRequest(
-                requests.get(0).email(),
-                requests.get(0).password()
-        );
-
-        HttpEntity<SignInRequest> requestEntity = new HttpEntity<>(signInRequest, headers);
-
-        ResponseEntity<AccessTokenResponse> response = rest.exchange(
-                createURLForLogin(),
-                HttpMethod.POST,
-                requestEntity,
-                AccessTokenResponse.class
-        );
+        ResponseEntity<AccessTokenResponse> response = getLoginResponseEntity();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
@@ -93,12 +73,45 @@ class ChiPhoneContactsApplicationTests {
         assertEquals(AuthorityRepository.ADMIN_AUTHORITIES, accessTokenResponse.authorities());
     }
 
-    private URI createURLForLogin() {
-        return URI.create(Routes.TOKEN);
-    }
-
     private long getAccessExpireIn() {
         return securityProperties.getJwt().getAccessExpireIn().getSeconds();
+    }
+
+    private ResponseEntity<AccessTokenResponse> getLoginResponseEntity() {
+        SignInRequest body = getBody();
+        HttpHeaders headers = getHeaders();
+        HttpEntity<SignInRequest> requestEntity = new HttpEntity<>(body, headers);
+
+        return rest.exchange(
+                baseURLLogin(),
+                HttpMethod.POST,
+                requestEntity,
+                AccessTokenResponse.class
+        );
+    }
+
+    private SignInRequest getBody() {
+        List<SaveUserRequest> userRequest = securityProperties.getAdmins().entrySet().stream()
+                .map(entry -> new SaveUserRequest(
+                        entry.getValue().getEmail(),
+                        new String(entry.getValue().getPassword()),
+                        entry.getKey()))
+                .peek(admin -> log.info("Default admin found: {} <{}>", admin.nickname(), admin.email())).toList();
+
+        return new SignInRequest(
+                userRequest.get(0).email(),
+                userRequest.get(0).password()
+        );
+    }
+
+    private HttpHeaders getHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
+    }
+
+    private URI baseURLLogin() {
+        return URI.create(Routes.TOKEN);
     }
 
     // endregion user
@@ -124,8 +137,8 @@ class ChiPhoneContactsApplicationTests {
     }
 
     private ResponseEntity<ContactResponse> createContact(String name, List<String> emails, List<String> phones) {
-        var url = baseUrlContact();
-        var requestBody = new SaveContactRequest(name, emails, phones);
+        URI url = baseUrlContact();
+        SaveContactRequest requestBody = new SaveContactRequest(name, emails, phones);
         HttpHeaders headers = getHttpHeaders();
         HttpEntity<SaveContactRequest> requestEntity = new HttpEntity<>(requestBody, headers);
 
@@ -144,33 +157,8 @@ class ChiPhoneContactsApplicationTests {
     }
 
     private String getToken() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        List<SaveUserRequest> requests = securityProperties.getAdmins().entrySet().stream()
-                .map(entry -> new SaveUserRequest(
-                        entry.getValue().getEmail(),
-                        new String(entry.getValue().getPassword()),
-                        entry.getKey()))
-                .peek(admin -> log.info("Default admin found: {} <{}>", admin.nickname(), admin.email())).toList();
-        SignInRequest signInRequest = new SignInRequest(
-                requests.get(0).email(),
-                requests.get(0).password()
-        );
-
-        HttpEntity<SignInRequest> requestEntity = new HttpEntity<>(signInRequest, headers);
-
-        ResponseEntity<AccessTokenResponse> response = rest.exchange(
-                createURLForLogin(),
-                HttpMethod.POST,
-                requestEntity,
-                AccessTokenResponse.class
-        );
-
-        AccessTokenResponse accessTokenResponse = response.getBody();
-
-        assert accessTokenResponse != null;
-        return accessTokenResponse.accessToken();
+        ResponseEntity<AccessTokenResponse> response = getLoginResponseEntity();
+        return Objects.requireNonNull(response.getBody()).accessToken();
     }
 
     // endregion contact
