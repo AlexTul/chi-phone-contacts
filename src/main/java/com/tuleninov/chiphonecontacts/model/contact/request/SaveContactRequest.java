@@ -16,16 +16,16 @@ public record SaveContactRequest(
         String name,
 
         @Valid
-        @NotNull(message = "the emails list must not be blank")
+        @NotNull(message = "the email`s list must not be null")
         List<
-                @NotBlank(message = "the emails must not be blank") @Email(message = "the emails must be a valid email string")
+                @NotBlank(message = "the email must not be blank") @Email(message = "the emails must be a valid email string")
                         String> emails,
 
         @Valid
-        @NotNull(message = "the phones list must not be blank")
+        @NotNull(message = "the phone`s list must not be null")
         List<
-                @NotBlank(message = "the phones must not be blank")
-                @Size(min = 13, max = 13, message = "phones's length must be at 13")
+                @NotBlank(message = "the phone must not be blank")
+                @Size(min = 13, max = 13, message = "phone's length must be at 13")
                 @Pattern(regexp = "^\\+380\\d{9}$", message = "the phones must be in the format +380XXXXXXXXX")
                         String> phones
 

@@ -3,9 +3,9 @@ package com.tuleninov.chiphonecontacts.exceptions.phone;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-public class PhoneExceptions {
+public final class PhoneExceptions {
 
-    public PhoneExceptions() {
+    private PhoneExceptions() {
     }
 
     public static ResponseStatusException duplicatePhone(String phone) {

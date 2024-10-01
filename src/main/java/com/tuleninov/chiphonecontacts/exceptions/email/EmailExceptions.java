@@ -3,9 +3,9 @@ package com.tuleninov.chiphonecontacts.exceptions.email;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-public class EmailExceptions {
+public final class EmailExceptions {
 
-    public EmailExceptions() {
+    private EmailExceptions() {
     }
 
     public static ResponseStatusException duplicateEmail(String email) {
